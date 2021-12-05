@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'Views/login_or_register_page.dart';
 import 'Views/specialty_dish_page.dart';
 
 void main() {
@@ -21,7 +22,16 @@ class MyApp extends StatelessWidget {
       builder: (context, AsyncSnapshot snapshot) {
         // Show splash screen while waiting for app resources to load:
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const MaterialApp(home: Splash());
+          return  MaterialApp(
+             // home: Splash(),
+            initialRoute: SpecialtyDishPage.id,
+
+            routes: {
+              SpecialtyDishPage.id: (context) => SpecialtyDishPage(),
+              LoginOrRegisterPage.id: (context) => LoginOrRegisterPage(),
+            },
+
+          );
         } else {
           // Loading is done, return the app:
           return MaterialApp(
@@ -55,10 +65,47 @@ class Splash extends StatelessWidget {
     bool lightMode = MediaQuery.of(context).platformBrightness == Brightness.light;
     return Scaffold(
       backgroundColor: lightMode ? const Color(0xffe1f5fe) : const Color(0xff042a49),
-      body: Center(
-          child: lightMode
-              ? Image.asset('assets/splash_screen_logo.png')
-              : Image.asset('assets/splash_dark.png')),
+      body: Stack(
+          fit: StackFit.expand ,
+          children: <Widget> [
+            Container(
+              decoration: BoxDecoration(color: Colors.yellow),
+            ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                flex: 2,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget> [
+                      CircleAvatar(
+                        backgroundColor: Colors.red,
+                        radius: 100.0,
+                        child: Image.asset('assets/splash_screen_logo.png'),
+                      )
+                    ],
+                  ),
+              ),
+              Expanded(
+                flex: 1,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget> [
+                      CircularProgressIndicator(
+                        backgroundColor: Colors.white,
+                      ),
+                      Padding(
+                          padding: EdgeInsets.only(top: 20.0),
+                      ),
+                    ],
+                  ),
+              ),
+            ],
+          )
+          //child: lightMode ? Image.asset('assets/splash_screen_logo.png') : Image.asset('assets/splash_dark.png')),
+          ],
+      ),
     );
   }
 }
@@ -71,6 +118,6 @@ class Init {
     // This is where you can initialize the resources needed by your app while
     // the splash screen is displayed.  Remove the following example because
     // delaying the user experience is a bad design practice!
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 6));
   }
 }

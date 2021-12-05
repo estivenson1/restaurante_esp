@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LoginOrRegisterPage extends StatefulWidget {
+  static const String id= 'login_or_register_page';
   @override
   _loginOrRegisterPageState createState() => _loginOrRegisterPageState();
 }
